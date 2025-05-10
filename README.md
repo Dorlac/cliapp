@@ -1,42 +1,40 @@
-# Quick Plan
+# cliapp: General Purpose Go CLI App Template
 
-<!--
-This document is an outline for the Git-Auto project, a small automated internal tool for quickly collecting data from a git repo host. It includes notes and guidance for development, tech stack, workflow, and best practices.
--->
+This project is a template for building general purpose cross-platform Go CLI tools using Cobra, Docker, and modern automation. **No application binary or source is shipped in this repository**—instead, you get automation (Makefile, Docker, CI) to rapidly scaffold, build, and test your own CLI app.
 
-## Tools Used
+## Features
+- **Cobra-based CLI**: Standard Go CLI layout under `cmd/` (created by automation).
+- **Docker & DevContainer**: Develop in a reproducible container with all tools preinstalled.
+- **CI/CD**: GitHub Actions for build, test, lint, and CodeQL security scanning.
+- **Makefile**: Common tasks automated (build, test, lint, format, clean, scaffold).
+- **AI-Ready**: Optimized for use with GitHub Copilot and other AI tools.
 
-| Purpose                   | Tool / Choice                                      | Notes                                         |
-|---------------------------|----------------------------------------------------|-----------------------------------------------|
-| CLI framework             | Cobra                                              | Fast CLI development in Go                    |
-| HTTP client               | net/http                                           | Standard Go HTTP library                      |
-| Formatting/Linting        | go fmt, golangci-lint                              | Best practices, fast, static code analysis    |
-| Testing                   | go test, built-in testing, gock/httpmock           | Unit tests, HTTP mocking                      |
-| CLI output testing        | os/exec                                            | Run CLI in tests, verify output               |
-| Test coverage             | go test -coverprofile                              | Built-in Go coverage                          |
-| CI/CD                     | GitHub Actions, softprops/action-gh-release        | Automation, releases                          |
-| Code scanning             | CodeQL, DeepSource, Codacy                         | Security, bug detection, free options         |
-| AI assistance             | GitHub Copilot or similar                          | Auto-suggest/generate unit tests, PRs         |
+## Quick Start
 
----
+### 1. Scaffold and Build Your App
+```bash
+make newapp APPNAME=myapp   # Scaffold a new CLI app named 'myapp'
+make build APPNAME=myapp    # Build the app (outputs to bin/myapp)
+./bin/myapp --help          # Run your new CLI app
+```
 
-## Roadmap
+### 2. Add Your Commands
+- Use `cobra-cli add <command>` to scaffold new commands in `cmd/` (after initial generation).
+- Edit `cmd/root.go` to customize the app.
 
-| Phase / Task Group         | Task(s)                                                                 | Target / Notes                                 |
-|---------------------------|------------------------------------------------------------------------|------------------------------------------------|
-| Initial Setup             | Dev container, Go setup, basic repo init                               | Local build, first commit                      |
-| CLI Foundation            | CLI structure (Cobra), basic GitLab API calls                          | `gitlab-auto-admin list-projects` working      |
-| Testing Infrastructure    | Set up Go unit testing + mock server                                   | Use native Go tools                            |
-| Core Testing              | Write critical unit and basic integration tests                        | Cover authentication, main API queries         |
-| Feature Expansion         | Expand features (users, permissions), add GitHub Issues feedback loop  | MVP CLI                                        |
-| Final Polish              | Run linters and simple test coverage check                             | Final polish                                   |
-| Stabilization             | Polish (completion scripts, README, examples), buffer for bugs         | Stable v1.0                                    |
-| Stretch: AI-Assisted Testing | AI-assisted auto-suggest unit tests                                 | Auto-suggest tests                             |
-| Stretch: AI CLI Help      | Set up AI CLI help and auto-completion                                 | Enhanced CLI usability                         |
-| Stretch: CI/CD            | Set up CI/CD (GitHub Actions, project, and releases)                   | Automated builds and releases                  |
-| Stretch: Code Scanning    | Enable Code Scanning Alerts + add CodeQL GitHub Action                 | Security and code quality                      |
-| Stretch: Config/Flags     | Add internal config + flags to toggle AI features on/off               | Safe rollout of AI features                    |
-| Stretch: Cloud/Analytics  | Expand to cloud deployment and advanced analytics                      | Broader deployment and insights                |
-| Stretch: Release/AI Boost | Deployment via GitHub Release + softprops/action-gh-release; AI PRs, DeepSource/Codacy | Easy deployment, AI PRs, free code analysis    |
+## Project Structure (after running `make newapp APPNAME=myapp` and `make build APPNAME=myapp`)
+```
+myapp/
+  main.go
+  cmd/
+bin/
+  myapp
+```
+
+> **Note:** The app source directory (e.g., `myapp/`) and binary (e.g., `bin/myapp`) are generated by automation and are not tracked in git. See `.gitignore`.
+
+## CI/CD
+- On push/PR: Build, test, lint (see `.github/workflows/ci.yml`).
+- CodeQL security scan (see `.github/workflows/codeql.yml`).
 
 ---

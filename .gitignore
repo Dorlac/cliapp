@@ -1,0 +1,7 @@
+# Ignore built CLI binaries and any files created by the application
+/bin/
+cliapp
+*.log
+*.tmp
+*.out
+*.cache
