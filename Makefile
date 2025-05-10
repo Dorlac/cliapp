@@ -2,7 +2,7 @@
 APPNAME ?= cliapp
 
 build:
-	CGO_ENABLED=0 go build -o bin/$(APPNAME) ./$(APPNAME)/main.go
+	cd $(APPNAME) && CGO_ENABLED=0 go build -o ../bin/$(APPNAME) .
 
 clean:
 	rm -rf bin/$(APPNAME)
@@ -10,7 +10,7 @@ clean:
 .PHONY: build clean
 
 test:
-	go test -v ./$(APPNAME)/...
+	cd $(APPNAME) && go test -v ./...
 
 lint:
 	golangci-lint run ./$(APPNAME)/...
@@ -28,8 +28,11 @@ newapp:
 		echo "Directory $(APPNAME) already exists."; \
 		exit 1; \
 	fi; \
-	mkdir -p $(APPNAME)/cmd; \
-	printf 'package main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println("Hello from %s!")\n}\n' "$(APPNAME)" > $(APPNAME)/main.go
+	mkdir -p $(APPNAME); \
+	cd $(APPNAME) && \
+	  go mod init $(APPNAME) && \
+	  go run github.com/spf13/cobra-cli@latest init && \
+	  echo 'package main\n\nimport "testing"\n\nfunc TestMain(t *testing.T) {\n    // Example test\n}' > main_test.go
 
 # Remove an app and its binary: make removeapp APPNAME=myapp
 removeapp:

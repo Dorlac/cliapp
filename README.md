@@ -22,6 +22,13 @@ make build APPNAME=myapp    # Build the app (outputs to bin/myapp)
 - Use `cobra-cli add <command>` to scaffold new commands in `cmd/` (after initial generation).
 - Edit `cmd/root.go` to customize the app.
 
+### 3. Remove Your App
+```bash
+make removeapp APPNAME=myapp   # Remove the app source and binary
+```
+
+This command deletes both the app’s source directory (e.g., `myapp/`) and its binary (e.g., `bin/myapp`).
+
 ## Project Structure (after running `make newapp APPNAME=myapp` and `make build APPNAME=myapp`)
 ```
 myapp/
@@ -36,5 +43,50 @@ bin/
 ## CI/CD
 - On push/PR: Build, test, lint (see `.github/workflows/ci.yml`).
 - CodeQL security scan (see `.github/workflows/codeql.yml`).
+
+## Enhancements
+
+### Add go.mod to New Apps
+To automatically create a `go.mod` file for each new app, update the `newapp` target in your Makefile to include:
+```makefile
+	cd $(APPNAME) && go mod init $(APPNAME)
+```
+This will initialize a Go module for the new app.
+
+### Integrate Cobra (Optional)
+To scaffold a Cobra-based CLI, install `cobra-cli` in your dev container and add to the `newapp` target:
+```makefile
+	cd $(APPNAME) && cobra-cli init --pkg-name $(APPNAME)
+```
+This will set up a standard Cobra CLI structure.
+
+### Example Test Target
+You can add example tests to the scaffolded app and ensure the `test` target works. For example, in your `newapp` target, add:
+```makefile
+	mkdir -p $(APPNAME)/cmd
+	echo 'package main\n\nimport "testing"\n\nfunc TestMain(t *testing.T) {\n    // Example test\n}' > $(APPNAME)/main_test.go
+```
+
+### Usage Example
+```bash
+make newapp APPNAME=demo         # Scaffold new app with go.mod and optional Cobra
+make build APPNAME=demo          # Build the app
+make test APPNAME=demo           # Run tests
+make removeapp APPNAME=demo      # Remove the app and its binary
+```
+
+### .gitignore
+Ensure your `.gitignore` includes patterns to ignore all generated app directories and binaries:
+```
+/bin/
+*
+!README.md
+!Makefile
+!Dockerfile
+!bin/
+```
+Adjust as needed to avoid tracking generated content.
+
+**Tip:** For AI-assisted development, use GitHub Copilot or similar tools to accelerate feature development, generate tests, and improve code quality. See `guidelines/github-copilot-best-practices.md` for tips.
 
 ---
