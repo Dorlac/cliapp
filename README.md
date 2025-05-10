@@ -44,6 +44,22 @@ bin/
 - On push/PR: Build, test, lint (see `.github/workflows/ci.yml`).
 - CodeQL security scan (see `.github/workflows/codeql.yml`).
 
+## VS Code Workspaces
+
+This project works well as a single-folder workspace in VS Code. Simply open the project folder in VS Code to get started.
+
+**Why use a VS Code workspace?**
+- Save project-specific settings (formatting, linting, etc.)
+- Share recommended extensions and tasks with your team
+- Organize multi-folder or monorepo projects
+
+**How to use:**
+- Open the project folder in VS Code: `File > Open Folder...`
+- (Optional) To create a multi-root workspace or save workspace settings, go to `File > Save Workspace As...` and save a `.code-workspace` file in the project root.
+- You can add project-specific settings in `.vscode/settings.json` and recommend extensions in `.vscode/extensions.json`.
+
+For most users, simply opening the project folder is enough. For advanced configuration, see the [VS Code documentation on workspaces](https://code.visualstudio.com/docs/editor/workspaces).
+
 ## Enhancements
 
 ### Add go.mod to New Apps
