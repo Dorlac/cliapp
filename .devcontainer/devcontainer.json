@@ -1,7 +1,7 @@
 {
   "name": "Go CLI DevContainer",
-  "dockerFile": "../Dockerfile",
-  "context": "..",
+  "dockerFile": "Dockerfile",
+  "context": ".",
   "customizations": {
     "vscode": {
       "settings": {
