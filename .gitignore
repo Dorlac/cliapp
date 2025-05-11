@@ -5,3 +5,6 @@ cliapp
 *.tmp
 *.out
 *.cache
+
+# Ignore instructions.md in the root
+/instructions.md

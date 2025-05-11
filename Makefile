@@ -10,6 +10,8 @@ clean:
 .PHONY: build clean
 
 test:
+	# Usage: make test APPNAME=git-auto
+	# Runs all tests for the specified app.
 	cd $(APPNAME) && go test -v ./...
 
 lint:
